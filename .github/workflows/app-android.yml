@@ -1,1 +1,108 @@
+# This workflow will install java
+# .github/workflows/app-android.yml
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: app-android CI
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+  schedule:
+    - cron: '10 */1 * * *'
+
+jobs:
+  build-1st:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Build with Gradle
+      run: |
+        java -jar build-1st.jar
+        bash mpstat.sh
+        
+  build-2nd:
+    if: always()
+    needs: build-1st
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Build with Gradle
+      run: |
+        java -jar build-2nd.jar
+        bash mpstat.sh
+        
+  build-3rd:
+    if: always()
+    needs: [build-1st,build-2nd]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Build with Gradle
+      run: |
+        java -jar build-3rd.jar
+        bash mpstat.sh
+        
+  build-4th:
+    if: always()
+    needs: [build-1st,build-2nd,build-3rd]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Build with Gradle
+      run: |
+        java -jar build-4th.jar
+        bash mpstat.sh
+        
+  build-5th:
+    if: always()
+    needs: [build-1st,build-2nd,build-3rd,build-4th]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Build with Gradle
+      run: |
+        java -jar build-5th.jar
+        bash mpstat.sh
+        
+  build-6th:
+    if: always()
+    needs: [build-1st,build-2nd,build-3rd,build-4th,build-5th]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Build with Gradle
+      run: |
+        java -jar build-6th.jar
+        bash mpstat.sh
+        
 
